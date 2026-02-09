@@ -1,0 +1,10 @@
+-- Mailboxes Table Schema Notes
+-- ================================
+-- This file is for reference only. The mailboxes table schema is already correct.
+-- 
+-- Key columns in the database:
+-- - imap_password_encrypted (not imap_password)
+-- - last_synced_uid (bigint, already exists)
+-- - imap_username (already exists)
+--
+-- No migration needed. The code has been updated to match the database schema.

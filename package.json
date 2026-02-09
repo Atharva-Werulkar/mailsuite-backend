@@ -1,0 +1,32 @@
+{
+  "name": "mailsuite-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "MailSuite backend APIs",
+  "main": "app.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "concurrently --names \"API,WORKER\" --prefix-colors \"cyan,green\" \"nodemon server.js\" \"nodemon services/email-worker/scheduler.js\"",
+    "api": "nodemon server.js",
+    "worker": "nodemon services/email-worker/scheduler.js",
+    "api-only": "node app.js",
+    "worker-only": "node services/email-worker/scheduler.js"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.2.0",
+    "@fastify/rate-limit": "^10.1.1",
+    "@supabase/supabase-js": "^2.57.0",
+    "dotenv": "17.2.3",
+    "fastify": "5.7.4",
+    "fastify-plugin": "^5.0.1",
+    "imapflow": "^1.0.168",
+    "jsonwebtoken": "^9.0.2",
+    "mailparser": "^3.7.1",
+    "node-cron": "^3.0.3",
+    "zod": "4.3.6"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.10"
+  }
+}
