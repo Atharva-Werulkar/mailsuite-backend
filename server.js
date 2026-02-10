@@ -41,21 +41,20 @@ app.register(rateLimit, {
 // Decorate fastify with supabase client
 app.decorate("supabase", supabaseAdmin);
 
+// Public routes (no auth required)
+app.get("/health", async (request, reply) => {
+  return reply.send({ status: "ok", timestamp: new Date().toISOString() });
+});
+
 // 🔐 Auth (applies to ALL routes after this)
 app.register(authPlugin);
 
-// Routes
+// Protected routes
 app.register(authRoutes, { prefix: "/api/v1" });
 app.register(bounceRoutes, { prefix: "/api/v1" });
 app.register(mailboxRoutes, { prefix: "/api/v1" });
 app.register(threadRoutes, { prefix: "/api/v1" });
 app.register(emailRoutes, { prefix: "/api/v1" });
-
-//health
-app.get("/health", async (request, reply) => {
-  console.log("🏥 Health check endpoint called");
-  return reply.send({ status: "ok" });
-});
 
 const PORT = process.env.PORT || 3000;
 

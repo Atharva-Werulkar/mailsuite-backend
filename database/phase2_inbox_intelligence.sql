@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS public.emails (
     SET NULL,
         in_reply_to TEXT,
         -- Message-ID of parent
-        references TEXT [],
+        reference_ids TEXT [],
         -- Array of referenced message IDs
         -- Content and flags
         body_preview TEXT,

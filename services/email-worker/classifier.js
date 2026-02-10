@@ -251,7 +251,13 @@ export class EmailClassifier {
 
   isHuman(email) {
     const from = (email.from || "").toLowerCase();
-    const to = (email.to || []).map((addr) => addr.toLowerCase());
+    // Handle both string and array formats
+    const toArray = Array.isArray(email.to)
+      ? email.to
+      : email.to
+        ? [email.to]
+        : [];
+    const to = toArray.map((addr) => addr.toLowerCase());
     const headers = email.headers || {};
 
     // Not from common automated senders

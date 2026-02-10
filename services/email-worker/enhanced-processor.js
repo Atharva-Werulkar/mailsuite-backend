@@ -136,6 +136,16 @@ export class EnhancedEmailProcessor {
   }
 
   /**
+   * Normalize email address field to array
+   */
+  normalizeEmailArray(value) {
+    if (!value) return [];
+    if (Array.isArray(value)) return value;
+    if (typeof value === "string") return [value];
+    return [];
+  }
+
+  /**
    * Process a single message: classify, thread, store, and handle bounces
    */
   async processMessage(mailbox, message) {
@@ -153,6 +163,12 @@ export class EnhancedEmailProcessor {
         return;
       }
 
+      // Normalize email address arrays (IMAP returns strings or arrays)
+      message.to = this.normalizeEmailArray(message.to);
+      message.cc = this.normalizeEmailArray(message.cc);
+      message.bcc = this.normalizeEmailArray(message.bcc);
+      message.references = this.normalizeEmailArray(message.references);
+
       // 1. Classify email
       const classification = this.classifier.classify(message);
       console.log(
@@ -166,10 +182,10 @@ export class EnhancedEmailProcessor {
         {
           subject: message.subject,
           from: message.from,
-          to: message.to || [],
-          cc: message.cc || [],
+          to: message.to,
+          cc: message.cc,
           inReplyTo: message.inReplyTo,
-          references: message.references || [],
+          references: message.references,
           receivedAt: message.receivedAt || new Date().toISOString(),
         },
       );
@@ -194,14 +210,14 @@ export class EnhancedEmailProcessor {
           subject: message.subject || "(No Subject)",
           from_address: fromAddress,
           from_name: fromName,
-          to_addresses: message.to || [],
-          cc_addresses: message.cc || [],
-          bcc_addresses: message.bcc || [],
+          to_addresses: message.to,
+          cc_addresses: message.cc,
+          bcc_addresses: message.bcc,
           category: classification.category,
           category_confidence: classification.confidence,
           thread_id: threadId,
           in_reply_to: message.inReplyTo,
-          references: message.references || [],
+          reference_ids: message.references,
           body_preview: bodyPreview,
           has_attachments:
             message.attachments && message.attachments.length > 0,

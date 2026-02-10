@@ -7,6 +7,7 @@ async function authPlugin(fastify) {
   fastify.addHook("onRequest", async (request, reply) => {
     // Public routes that don't require authentication
     const publicRoutes = [
+      "/health",
       "/api/v1/mailboxes/test",
       "/api/v1/auth/register",
       "/api/v1/auth/login",
