@@ -6,6 +6,7 @@ import Fastify from "fastify";
 import authPlugin from "./plugins/auth.js";
 import authRoutes from "./routes/auth.js";
 import bounceRoutes from "./routes/bounces.js";
+import cronRoutes from "./routes/cron.js";
 import emailRoutes from "./routes/emails.js";
 import mailboxRoutes from "./routes/mailboxes.js";
 import threadRoutes from "./routes/threads.js";
@@ -55,6 +56,7 @@ app.register(bounceRoutes, { prefix: "/api/v1" });
 app.register(mailboxRoutes, { prefix: "/api/v1" });
 app.register(threadRoutes, { prefix: "/api/v1" });
 app.register(emailRoutes, { prefix: "/api/v1" });
+app.register(cronRoutes, { prefix: "/api" });
 
 const PORT = process.env.PORT || 3000;
 

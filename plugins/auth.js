@@ -8,6 +8,7 @@ async function authPlugin(fastify) {
     // Public routes that don't require authentication
     const publicRoutes = [
       "/health",
+      "/api/cron/sync-emails",
       "/api/v1/mailboxes/test",
       "/api/v1/auth/register",
       "/api/v1/auth/login",
