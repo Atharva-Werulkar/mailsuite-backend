@@ -17,10 +17,6 @@ jobs:
               run: |
                   response=$(curl -X POST \
                     -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
-                    -H "Content-Type: application/json" \
-                    -w "\nHTTP Status: %{http_code}" \
-                    -s \
-                    ${{ secrets.VERCEL_APP_URL }}/api/cron/sync-emails)
 
                   echo "$response"
 
