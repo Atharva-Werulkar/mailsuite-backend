@@ -1,6 +1,15 @@
 # MailSuite Backend - Phase 1 Setup
 
-## 📦 Installation
+## � Quick Links
+
+- 🚀 **[Deploy to Production](./DEPLOYMENT.md)** - Quick deployment guide
+- 🤖 **[GitHub Actions Setup](./GITHUB_ACTIONS_SETUP.md)** - Free email sync (⭐ RECOMMENDED)
+- ☁️ **[Vercel Deployment](./VERCEL_DEPLOYMENT.md)** - Full Vercel guide
+- 💻 **[Local Development](./QUICK_START_UNIFIED.md)** - Development setup
+
+---
+
+## �📦 Installation
 
 ```bash
 npm install

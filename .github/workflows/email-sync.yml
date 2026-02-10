@@ -1,0 +1,43 @@
+name: Email Sync Cron Job
+
+on:
+    schedule:
+        # Runs every 5 minutes
+        - cron: "*/5 * * * *"
+
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
+
+jobs:
+    sync-emails:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Trigger Email Sync
+              run: |
+                  response=$(curl -X POST \
+                    -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+                    -H "Content-Type: application/json" \
+                    -w "\nHTTP Status: %{http_code}" \
+                    -s \
+                    ${{ secrets.VERCEL_APP_URL }}/api/cron/sync-emails)
+
+                  echo "$response"
+
+                  # Check if request was successful
+                  if echo "$response" | grep -q "HTTP Status: 200"; then
+                    echo "✅ Email sync completed successfully"
+                  else
+                    echo "❌ Email sync failed"
+                    exit 1
+                  fi
+
+            - name: Notify on Failure
+              if: failure()
+              run: |
+                  echo "⚠️ Email sync job failed. Check the logs above for details."
+                  echo "Common issues:"
+                  echo "- CRON_SECRET not set or incorrect"
+                  echo "- VERCEL_APP_URL not set or incorrect"
+                  echo "- Vercel app not responding"
+                  echo "- Database connection issues"
